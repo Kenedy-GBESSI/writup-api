@@ -16,7 +16,8 @@ class ParagraphResource extends JsonResource
     {
         return [
             'content' => $this->content,
-            'chapter' => $this->chapter
+            'chapter' => $this->chapter,
+            'id' => $this->id,
         ];
     }
 }

@@ -5,8 +5,10 @@ use App\Http\Controllers\API\BookController;
 use App\Http\Controllers\API\ChapterController;
 use App\Http\Controllers\API\ParagraphController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\DownloadBookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Resources\UserResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return new UserResource($request->user());
 });
 Route::apiResources(['books' => BookController::class]);
 Route::apiResources(['chapters' => ChapterController::class]);
@@ -32,3 +34,5 @@ Route::controller(AuthController::class)->prefix('auth')->group(
         Route::post('login', 'login')->name('login');
     }
 );
+Route::post('download',[ DownloadBookController ::class,'downloadBook']);
+Route::post('book',[ DownloadBookController ::class,'getBook']);

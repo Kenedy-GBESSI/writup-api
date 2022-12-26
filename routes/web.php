@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\DownloadBookController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/pdf',[DownloadBookController::class,'show']);
+Route::get('/pdf/create',[DownloadBookController::class,'createPDF']);

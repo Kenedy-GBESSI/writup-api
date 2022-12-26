@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -35,6 +36,20 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
+    /**
+    * Report or log an exception.
+    *
+    * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
+    *
+    * @param  \Exception  $exception
+    * @return void
+    */
+    public function report(Throwable $e)
+    {
+        parent::report($e);
+    }
+
+
 
     /**
      * Register the exception handling callbacks for the application.
@@ -46,5 +61,27 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+        /**
+
+    * Render an exception into an HTTP response.
+
+    *
+
+    * @param  \Illuminate\Http\Request  $request
+
+    * @param  \Exception  $exception
+
+    * @return \Illuminate\Http\Response
+
+    */
+
+    public function render($request, Throwable $e)
+    {
+        if( $e instanceof ModelNotFoundException){
+            return response()->json(['error' => 'Data not found.']);
+        }
+        return parent::render($request, $e);
     }
 }

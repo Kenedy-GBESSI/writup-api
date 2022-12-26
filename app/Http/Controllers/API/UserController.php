@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -33,7 +34,7 @@ class UserController extends Controller
         $data = $request->all();
         $data['password'] = Hash::make($data['password']);
         $user = User::create($data);
-        return new UserResource($user); 
+        return new UserResource($user);
     }
 
     /**
